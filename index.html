@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coze Chat App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f2f5;
+    }
+    .chat-container {
+      width: 100%;
+      max-width: 400px;
+      height: 600px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    .chat-header {
+      background: #007bff;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .chat-body {
+      height: calc(100% - 80px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">Coze Chat</div>
+    <div class="chat-body">
+      <script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.3/libs/cn/index.js"></script>
+      <script>
+        new CozeWebSDK.WebChatClient({
+          config: {
+            bot_id: '7473097391462645794',
+          },
+          componentProps: {
+            title: 'Coze',
+          },
+          auth: {
+            type: 'token',
+            token: 'pat_********',
+            onRefreshToken: function () {
+              return 'pat_********';
+            }
+          }
+        });
+      </script>
+    </div>
+  </div>
+</body>
+</html>
