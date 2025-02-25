@@ -1,68 +1,217 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coze Chat App</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background-color: #f0f2f5;
-    }
-    .chat-container {
-      width: 100%;
-      max-width: 400px;
-      height: 600px;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-    }
-    .chat-header {
-      background: #007bff;
-      color: white;
-      padding: 15px;
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-    }
-    .chat-body {
-      height: calc(100% - 80px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>镜像深渊 - 拉康精神分析模拟器</title>
+    <meta name="description" content="拉康精神分析模拟场域 - 通过符号界诊疗仪揭示您话语中的无意识结构">
+    <style>
+        :root {
+            --blood-red: #ff003c;
+            --obsidian: #0a0a0a;
+            --parchment: #e8e0d2;
+        }
+        
+        body {
+            background: radial-gradient(circle at center, #1a1a1a 0%, var(--obsidian) 100%);
+            color: var(--parchment);
+            font-family: 'EB Garamond', serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* 神经脉络动态背景 */
+        .neuro-pattern {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(to right, rgba(255,0,60,0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,0,60,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: -1;
+        }
+
+        /* 警告标识动态效果 */
+        .warning-symbol {
+            position: fixed;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2em;
+            animation: flicker 1.5s infinite alternate;
+            text-shadow: 0 0 10px var(--blood-red);
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.8; }
+            100% { opacity: 0.2; }
+        }
+
+        /* 术语漂浮层 */
+        .terminology-cloud {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .terminology {
+            position: absolute;
+            opacity: 0.3;
+            font-size: 0.8em;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+
+        /* 对话触发器 */
+        .chat-trigger {
+            background: linear-gradient(45deg, var(--obsidian), #2a0a0a);
+            border: 1px solid var(--blood-red);
+            color: var(--blood-red);
+            padding: 15px 30px;
+            font-size: 1.2em;
+            letter-spacing: 2px;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+        }
+        .chat-trigger:hover {
+            text-shadow: 0 0 15px var(--blood-red);
+            box-shadow: 0 0 20px rgba(255,0,60,0.3);
+        }
+
+        /* 内容区域 */
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(10, 10, 10, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255,0,60,0.1);
+        }
+
+        h1 {
+            font-size: 3em;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--blood-red);
+            text-shadow: 0 0 10px rgba(255,0,60,0.3);
+        }
+
+        footer {
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.8em;
+            opacity: 0.7;
+        }
+    </style>
+    <!-- 古籍风格字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="chat-container">
-    <div class="chat-header">Coze Chat</div>
-    <div class="chat-body">
-      <script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.3/libs/cn/index.js"></script>
-      <script>
-        new CozeWebSDK.WebChatClient({
-          config: {
-            bot_id: '7473097391462645794',
-          },
-          componentProps: {
-            title: 'Coze',
-          },
-          auth: {
-            type: 'token',
-            token: 'pat_********',
-            onRefreshToken: function () {
-              return 'pat_********';
-            }
-          }
-        });
-      </script>
+    <div class="neuro-pattern"></div>
+    <div class="warning-symbol">⚠ 符号界入侵警告 ⚠</div>
+    
+    <div class="content">
+        <header>
+            <h1>镜像深渊</h1>
+            <p style="border-top: 1px solid var(--blood-red); padding-top: 1em;">
+                "你所言说的每个词语，都在暴露你欲望的拓扑结构"
+            </p>
+        </header>
+
+        <main>
+            <section>
+                <h2>欢迎来到精神分析场域</h2>
+                <p>在这里，您的每个话语都将被置于符号界的显微镜下...</p>
+            </section>
+        </main>
     </div>
-  </div>
+
+    <!-- 动态术语云 -->
+    <div class="terminology-cloud">
+        <!-- 通过JavaScript动态生成术语 -->
+    </div>
+
+    <!-- 对话界面 -->
+    <button class="chat-trigger" onclick="initiateAnalysis()">启动符号界诊断</button>
+
+    <!-- 伦理警示 -->
+    <footer>
+        警告：本界面可能引发对主体性的根本性质疑，进入即表示接受符号界的暴力性阐释
+    </footer>
+
+    <!-- Coze SDK -->
+    <script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.3/libs/cn/index.js"></script>
+    <script>
+        // 动态生成漂浮术语
+        const terms = ['对象a', '大他者', '菲勒斯', '镜像阶段', '阉割焦虑', '能指链', '享乐', '症状', '实在界'];
+        terms.forEach((term, index) => {
+            const el = document.createElement('div');
+            el.className = 'terminology';
+            el.textContent = term;
+            el.style.left = `${Math.random() * 100}%`;
+            el.style.animationDelay = `${Math.random() * 5}s`;
+            document.querySelector('.terminology-cloud').appendChild(el);
+        });
+
+        let analyticalSession = null;
+        
+        function initiateAnalysis() {
+            if (!analyticalSession) {
+                analyticalSession = new CozeWebSDK.WebChatClient({
+                    config: {
+                        bot_id: '7473097391462645794',
+                    },
+                    componentProps: {
+                        title: '符号界诊疗仪 v0.23',
+                        height: 650,
+                        width: 450,
+                        headerStyle: {
+                            backgroundColor: 'var(--obsidian)',
+                            color: 'var(--blood-red)'
+                        }
+                    },
+                    auth: {
+                        type: 'token',
+                        token: 'pat_vYN2MTz0WWm1tJh1WD4Hg8WRXBg35qwphxXKcqGjV1764zgjhLec5T1sxgEnlxSi',
+                        onRefreshToken: () => 'pat_vYN2MTz0WWm1tJh1WD4Hg8WRXBg35qwphxXKcqGjV1764zgjhLec5T1sxgEnlxSi'
+                    }
+                });
+                
+                // 添加进入动画
+                document.querySelector('.chat-trigger').textContent = '终止诊断协议';
+                document.body.style.filter = 'contrast(1.2)';
+            } else {
+                analyticalSession.toggle();
+                document.querySelector('.chat-trigger').textContent = '重启符号界诊断';
+                document.body.style.filter = 'none';
+            }
+        }
+
+        // 随机拉康箴言
+        const maxims = [
+            "欲望是他者的欲望",
+            "真理来自误认",
+            "无意识像语言那样构成",
+            "主体通过他者来欲望"
+        ];
+        setInterval(() => {
+            document.querySelector('header p').innerHTML = `"${maxims[Math.floor(Math.random()*maxims.length)]}"`;
+        }, 10000);
+    </script>
 </body>
 </html>
